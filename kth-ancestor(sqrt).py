@@ -11,12 +11,12 @@ class KthAncestor:
         self.b = math.floor(n ** .5)
         for index in range(n):
             self.bparents[index] = self.dfs(index)        
-        return
     def dfs(self, node: int):
         count = 0
         result = []
         nextnode = node
-        while count != self.b and nextnode != -1:
+        result.append(nextnode)
+        while count != self.b and nextnode != 0:
             nextnode = self.parentgraph[nextnode][0]
             count += 1
             result.append(nextnode)
@@ -27,13 +27,13 @@ class KthAncestor:
 
 
     def getkthancestor(self, node: int, k: int):
-        nextnode = node
-        if k == 0:
-            return nextnode
-        while k >= self.b:
-            nextnode = self.bparents[nextnode][self.b-1]
+        while k != 0:
+            if node == -1:
+                return -1
+            if k <= self.b:
+                return self.bparents[node][k]
+            node = self.bparents[node][self.b]    
             k -= self.b
-        return self.bparents[nextnode][k -1 ]
             
 
 
